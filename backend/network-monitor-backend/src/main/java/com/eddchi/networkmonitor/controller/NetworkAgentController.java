@@ -40,4 +40,11 @@ public class NetworkAgentController {
     public void deleteAgent(@PathVariable Long id) {
         networkAgentService.deleteAgent(id);
     }
+
+    @PutMapping("/{id}/heartbeat")
+    public NetworkAgent updateHeartbeat(
+            @PathVariable Long id) {
+
+        return networkAgentService.updateHeartbeat(id);
+    }
 }

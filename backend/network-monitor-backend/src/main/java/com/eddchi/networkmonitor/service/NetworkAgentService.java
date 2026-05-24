@@ -5,6 +5,7 @@ import com.eddchi.networkmonitor.repository.NetworkAgentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,5 +34,17 @@ public class NetworkAgentService {
 
     public void deleteAgent(Long id) {
         networkAgentRepository.deleteById(id);
+    }
+
+    // agent heartbeat updates
+    public NetworkAgent updateHeartbeat(Long id) {
+
+        NetworkAgent agent = networkAgentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Agent not found"));
+
+        agent.setLastSeen(LocalDateTime.now());
+        agent.setStatus("ONLINE");
+
+        return networkAgentRepository.save(agent);
     }
 }
