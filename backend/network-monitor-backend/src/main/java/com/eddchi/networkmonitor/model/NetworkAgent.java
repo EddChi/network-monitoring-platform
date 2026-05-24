@@ -32,4 +32,11 @@ public class NetworkAgent {
     private LocalDateTime lastSeen;
 
     private LocalDateTime createdAt;
+
+    // auto inserts createdAt and lastSeen timestamps
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+        lastSeen = LocalDateTime.now();
+    }
 }
