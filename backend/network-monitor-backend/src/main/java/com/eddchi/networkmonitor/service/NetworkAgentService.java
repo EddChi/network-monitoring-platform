@@ -2,8 +2,10 @@ package com.eddchi.networkmonitor.service;
 
 import com.eddchi.networkmonitor.model.NetworkAgent;
 import com.eddchi.networkmonitor.repository.NetworkAgentRepository;
+import com.eddchi.networkmonitor.repository.NetworkEventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,10 +31,22 @@ public class NetworkAgentService {
     }
 
     public NetworkAgent createAgent(NetworkAgent networkAgent) {
-        return networkAgentRepository.save(networkAgent);
+
+        NetworkAgent savedAgent =
+                networkAgentRepository.save(networkAgent);
+
+        networkEventService.recordEvent(
+                savedAgent,
+                "AGENT_CREATED",
+                "New network agent registered"
+        );
+
+        return savedAgent;
     }
 
+    @Transactional
     public void deleteAgent(Long id) {
+        networkEventRepository.deleteByNetworkAgentId(id);
         networkAgentRepository.deleteById(id);
     }
 
@@ -40,11 +54,25 @@ public class NetworkAgentService {
     public NetworkAgent updateHeartbeat(Long id) {
 
         NetworkAgent agent = networkAgentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agent not found"));
+                .orElseThrow(() ->
+                        new RuntimeException("Agent not found"));
 
         agent.setLastSeen(LocalDateTime.now());
         agent.setStatus("ONLINE");
 
-        return networkAgentRepository.save(agent);
+        NetworkAgent updatedAgent =
+                networkAgentRepository.save(agent);
+
+        networkEventService.recordEvent(
+                updatedAgent,
+                "HEARTBEAT_RECEIVED",
+                "Agent heartbeat received"
+        );
+
+        return updatedAgent;
     }
+
+    private final NetworkEventService networkEventService;
+
+    private final NetworkEventRepository networkEventRepository;
 }

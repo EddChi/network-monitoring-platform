@@ -28,8 +28,17 @@ public class AgentMonitoringService {
 
                 agent.setStatus("OFFLINE");
 
-                repository.save(agent);
+                NetworkAgent updatedAgent =
+                        repository.save(agent);
+
+                networkEventService.recordEvent(
+                        updatedAgent,
+                        "AGENT_OFFLINE",
+                        "Agent marked offline due to inactivity"
+                );
             }
         }
     }
+
+    private final NetworkEventService networkEventService;
 }
