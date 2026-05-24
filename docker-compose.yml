@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: network-monitor-postgres
+
+    environment:
+      POSTGRES_DB: network_monitor
+      POSTGRES_USER: monitor_user
+      POSTGRES_PASSWORD: monitor_pass
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
