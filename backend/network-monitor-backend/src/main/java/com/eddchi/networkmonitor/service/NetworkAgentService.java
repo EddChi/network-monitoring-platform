@@ -17,6 +17,11 @@ public class NetworkAgentService {
         return networkAgentRepository.findAll();
     }
 
+    // agent status filtering
+    public List<NetworkAgent> getAgentsByStatus(String status) {
+        return networkAgentRepository.findByStatus(status);
+    }
+
     public NetworkAgent getAgentById(Long id) {
         return networkAgentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Agent not found"));

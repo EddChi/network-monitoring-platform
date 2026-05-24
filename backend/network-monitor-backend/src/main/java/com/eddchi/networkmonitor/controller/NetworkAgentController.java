@@ -19,6 +19,13 @@ public class NetworkAgentController {
         return networkAgentService.getAllAgents();
     }
 
+    @GetMapping("/status/{status}")
+    public List<NetworkAgent> getAgentsByStatus(
+            @PathVariable String status) {
+
+        return networkAgentService.getAgentsByStatus(status);
+    }
+
     @GetMapping("/{id}")
     public NetworkAgent getAgentById(@PathVariable Long id) {
         return networkAgentService.getAgentById(id);
