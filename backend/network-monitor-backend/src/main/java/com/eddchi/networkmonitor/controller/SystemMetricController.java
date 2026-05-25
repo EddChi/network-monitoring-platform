@@ -1,5 +1,6 @@
 package com.eddchi.networkmonitor.controller;
 
+import com.eddchi.networkmonitor.dto.MetricSummaryResponse;
 import com.eddchi.networkmonitor.model.SystemMetric;
 import com.eddchi.networkmonitor.service.SystemMetricService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,12 @@ public class SystemMetricController {
             @PathVariable Long agentId) {
 
         return systemMetricService.getMetricsByAgentId(agentId);
+    }
+
+    @GetMapping("/agent/{agentId}/summary")
+    public MetricSummaryResponse getMetricSummary(
+            @PathVariable Long agentId) {
+
+        return systemMetricService.getMetricSummary(agentId);
     }
 }
