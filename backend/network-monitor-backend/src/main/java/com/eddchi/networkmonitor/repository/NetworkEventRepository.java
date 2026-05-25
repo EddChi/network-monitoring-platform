@@ -12,4 +12,6 @@ public interface NetworkEventRepository extends JpaRepository<NetworkEvent, Long
     void deleteByNetworkAgentId(Long agentId);
 
     List<NetworkEvent> findByNetworkAgentIdOrderByTimestampDesc(Long agentId);
+
+    List<NetworkEvent> findTop10ByOrderByTimestampDesc();
 }
