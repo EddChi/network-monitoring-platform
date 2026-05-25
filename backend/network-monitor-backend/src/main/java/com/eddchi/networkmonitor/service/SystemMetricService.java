@@ -24,7 +24,11 @@ public class SystemMetricService {
 
         metric.setNetworkAgent(agent);
 
-        return systemMetricRepository.save(metric);
+        SystemMetric savedMetric = systemMetricRepository.save(metric);
+
+        alertService.evaluateMetric(agent, savedMetric);
+
+        return savedMetric;
     }
 
     public List<SystemMetric> getMetricsByAgentId(Long agentId) {
@@ -94,4 +98,7 @@ public class SystemMetricService {
                 maxLatency
         );
     }
+
+    private final AlertService alertService;
+
 }
