@@ -1,5 +1,6 @@
 package com.eddchi.networkmonitor.service;
-
+import com.eddchi.networkmonitor.dto.AlertResponse;
+import com.eddchi.networkmonitor.dto.AlertResponse;
 import com.eddchi.networkmonitor.model.Alert;
 import com.eddchi.networkmonitor.model.NetworkAgent;
 import com.eddchi.networkmonitor.model.SystemMetric;
@@ -41,11 +42,34 @@ public class AlertService {
         return alertRepository.save(alert);
     }
 
-    public List<Alert> getAllAlerts() {
-        return alertRepository.findAll();
+    public List<AlertResponse> getAllAlerts() {
+
+        return alertRepository.findAll()
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
     }
 
-    public List<Alert> getAlertsByAgentId(Long agentId) {
-        return alertRepository.findByNetworkAgentIdOrderByCreatedAtDesc(agentId);
+    public List<AlertResponse> getAlertsByAgentId(Long agentId) {
+
+        return alertRepository
+                .findByNetworkAgentIdOrderByCreatedAtDesc(agentId)
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
+    }
+
+    private AlertResponse convertToResponse(Alert alert) {
+
+        return new AlertResponse(
+                alert.getId(),
+                alert.getAlertType(),
+                alert.getMessage(),
+                alert.getSeverity(),
+                alert.getCreatedAt(),
+                alert.getNetworkAgent().getId(),
+                alert.getNetworkAgent().getHostname(),
+                alert.getNetworkAgent().getStatus()
+        );
     }
 }
