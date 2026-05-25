@@ -6,6 +6,8 @@ import com.eddchi.networkmonitor.repository.NetworkEventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class NetworkEventService {
@@ -20,5 +22,13 @@ public class NetworkEventService {
                 .build();
 
         networkEventRepository.save(event);
+    }
+
+    public List<NetworkEvent> getAllEvents() {
+        return networkEventRepository.findAll();
+    }
+
+    public List<NetworkEvent> getEventsByAgentId(Long agentId) {
+        return networkEventRepository.findByNetworkAgentIdOrderByTimestampDesc(agentId);
     }
 }
