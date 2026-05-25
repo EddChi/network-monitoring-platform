@@ -77,4 +77,24 @@ public class NetworkAgentService {
     private final NetworkEventService networkEventService;
 
     private final NetworkEventRepository networkEventRepository;
+
+    // agent search + filtering
+    public List<NetworkAgent> searchAgents(String hostname, String status) {
+
+        if (hostname != null && status != null) {
+            return networkAgentRepository
+                    .findByHostnameContainingIgnoreCaseAndStatus(hostname, status);
+        }
+
+        if (hostname != null) {
+            return networkAgentRepository
+                    .findByHostnameContainingIgnoreCase(hostname);
+        }
+
+        if (status != null) {
+            return networkAgentRepository.findByStatus(status);
+        }
+
+        return networkAgentRepository.findAll();
+    }
 }

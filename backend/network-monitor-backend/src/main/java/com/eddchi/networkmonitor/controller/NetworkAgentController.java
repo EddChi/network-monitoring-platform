@@ -47,4 +47,13 @@ public class NetworkAgentController {
 
         return networkAgentService.updateHeartbeat(id);
     }
+
+    // agent search + filtering
+    @GetMapping("/search")
+    public List<NetworkAgent> searchAgents(
+            @RequestParam(required = false) String hostname,
+            @RequestParam(required = false) String status) {
+
+        return networkAgentService.searchAgents(hostname, status);
+    }
 }

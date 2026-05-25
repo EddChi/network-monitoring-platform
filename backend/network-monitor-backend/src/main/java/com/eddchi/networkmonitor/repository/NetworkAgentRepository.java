@@ -12,4 +12,12 @@ public interface NetworkAgentRepository extends JpaRepository<NetworkAgent, Long
     // query derivation
     List<NetworkAgent> findByStatus(String status);
 
+    // agent search + filtering
+    List<NetworkAgent> findByHostnameContainingIgnoreCase(String hostname);
+
+    List<NetworkAgent> findByHostnameContainingIgnoreCaseAndStatus(
+            String hostname,
+            String status
+    );
+
 }
