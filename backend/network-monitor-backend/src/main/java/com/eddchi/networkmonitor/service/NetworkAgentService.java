@@ -1,5 +1,6 @@
 package com.eddchi.networkmonitor.service;
 
+import com.eddchi.networkmonitor.exception.ResourceNotFoundException;
 import com.eddchi.networkmonitor.model.NetworkAgent;
 import com.eddchi.networkmonitor.repository.NetworkAgentRepository;
 import com.eddchi.networkmonitor.repository.NetworkEventRepository;
@@ -27,7 +28,8 @@ public class NetworkAgentService {
 
     public NetworkAgent getAgentById(Long id) {
         return networkAgentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agent not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Agent not found"));
     }
 
     public NetworkAgent createAgent(NetworkAgent networkAgent) {
@@ -55,7 +57,7 @@ public class NetworkAgentService {
 
         NetworkAgent agent = networkAgentRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Agent not found"));
+                        new ResourceNotFoundException("Agent not found"));
 
         agent.setLastSeen(LocalDateTime.now());
         agent.setStatus("ONLINE");

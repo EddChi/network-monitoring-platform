@@ -1,5 +1,6 @@
 package com.eddchi.networkmonitor.service;
 
+import com.eddchi.networkmonitor.exception.ResourceNotFoundException;
 import com.eddchi.networkmonitor.model.NetworkAgent;
 import com.eddchi.networkmonitor.model.SystemMetric;
 import com.eddchi.networkmonitor.repository.NetworkAgentRepository;
@@ -20,7 +21,8 @@ public class SystemMetricService {
     public SystemMetric recordMetric(Long agentId, SystemMetric metric) {
 
         NetworkAgent agent = networkAgentRepository.findById(agentId)
-                .orElseThrow(() -> new RuntimeException("Agent not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Agent not found"));
 
         metric.setNetworkAgent(agent);
 
