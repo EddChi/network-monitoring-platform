@@ -2,6 +2,19 @@ import SeverityBadge from "./SeverityBadge";
 import StatusBadge from "../agents/StatusBadge";
 
 function AlertTable({ alerts }) {
+    if (alerts.length === 0) {
+        return (
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center shadow-lg">
+                <h2 className="text-lg font-semibold text-slate-100">
+                    No alerts found
+                </h2>
+                <p className="mt-2 text-sm text-slate-400">
+                    No monitoring alerts have been generated yet.
+                </p>
+            </div>
+        );
+    }
+
     return (
         <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-lg">
             <table className="w-full text-left text-sm">
