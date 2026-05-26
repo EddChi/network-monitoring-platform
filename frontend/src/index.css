@@ -7,3 +7,26 @@ body {
     color: #e5e7eb;
     font-family: Inter, system-ui, sans-serif;
 }
+
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #334155 #020617;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #020617;
+    border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}

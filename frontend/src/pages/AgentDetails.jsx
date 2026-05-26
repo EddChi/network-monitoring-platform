@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import StatusBadge from "../components/agents/StatusBadge";
 import MetricsSummary from "../components/agents/MetricsSummary";
 import AgentEventTimeline from "../components/agents/AgentEventTimeline";
@@ -43,7 +43,17 @@ function AgentDetails() {
 
     return (
         <div>
-            <div>
+
+            <div className="mb-6">
+                <Link
+                    to="/agents"
+                    className="inline-flex rounded-xl border border-slate-700 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white"
+                >
+                    ← Back to Agents
+                </Link>
+            </div>
+
+            <div className="mb-8">
                 <p className="text-sm font-medium uppercase tracking-widest text-cyan-400">
                     Agent Details
                 </p>
@@ -68,7 +78,7 @@ function AgentDetails() {
             )}
 
             {agent && (
-                <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
+                <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
                     <div className="flex items-start justify-between gap-4">
                         <div>
                             <h2 className="text-2xl font-bold text-slate-100">

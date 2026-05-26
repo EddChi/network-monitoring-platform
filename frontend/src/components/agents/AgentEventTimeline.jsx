@@ -1,4 +1,6 @@
 function AgentEventTimeline({ events }) {
+    const visibleEvents = events.slice(0, 8);
+
     if (events.length === 0) {
         return (
             <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center shadow-lg">
@@ -14,18 +16,24 @@ function AgentEventTimeline({ events }) {
 
     return (
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
-            <div>
-                <h2 className="text-lg font-semibold text-slate-100">
-                    Agent Event Timeline
-                </h2>
+            <div className="flex items-start justify-between gap-4">
+                <div>
+                    <h2 className="text-lg font-semibold text-slate-100">
+                        Agent Event Timeline
+                    </h2>
 
-                <p className="mt-1 text-sm text-slate-400">
-                    Recent status changes and monitoring events for this agent.
-                </p>
+                    <p className="mt-1 text-sm text-slate-400">
+                        Showing the latest {visibleEvents.length} events for this agent.
+                    </p>
+                </div>
+
+                <span className="rounded-full border border-slate-700 px-3 py-1 text-xs font-medium text-slate-400">
+          {events.length} total events
+        </span>
             </div>
 
-            <div className="mt-6 space-y-4">
-                {events.map((event) => (
+            <div className="custom-scrollbar mt-6 max-h-[420px] space-y-4 overflow-y-auto pr-2">
+                {visibleEvents.map((event) => (
                     <div
                         key={event.id}
                         className="rounded-xl border border-slate-800 bg-slate-950 p-4"
