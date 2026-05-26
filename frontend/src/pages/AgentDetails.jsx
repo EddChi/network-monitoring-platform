@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import StatusBadge from "../components/agents/StatusBadge";
+import MetricsSummary from "../components/agents/MetricsSummary";
 import { getAgentById } from "../api/agentsApi";
+import { getAgentMetricsSummary } from "../api/metricsApi";
 
 function AgentDetails() {
     const { id } = useParams();
 
     const [agent, setAgent] = useState(null);
+    const [metrics, setMetrics] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        getAgentById(id)
-            .then((response) => {
-                setAgent(response.data);
+        Promise.all([getAgentById(id), getAgentMetricsSummary(id)])
+            .then(([agentResponse, metricsResponse]) => {
+                setAgent(agentResponse.data);
+                setMetrics(metricsResponse.data);
                 setError("");
             })
             .catch(() => {
@@ -83,6 +87,8 @@ function AgentDetails() {
                     </div>
                 </div>
             )}
+
+            {metrics && <MetricsSummary metrics={metrics} />}
         </div>
     );
 }
