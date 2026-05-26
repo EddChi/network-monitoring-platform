@@ -25,35 +25,40 @@ function Agents() {
             });
     }
 
-    function handleSearch(event) {
-        event.preventDefault();
-        setLoading(true);
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setLoading(true);
 
-        searchAgents({
-            hostname: hostname || undefined,
-            status: status || undefined,
-        })
-            .then((response) => {
-                setAgents(response.data);
-                setError("");
-            })
-            .catch(() => {
-                setError("Unable to search agents.");
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }
+            const hasFilters = hostname.trim() || status;
+
+            const request = hasFilters
+                ? searchAgents({
+                    hostname: hostname.trim() || undefined,
+                    status: status || undefined,
+                })
+                : getAgents();
+
+            request
+                .then((response) => {
+                    setAgents(response.data);
+                    setError("");
+                })
+                .catch(() => {
+                    setError("Unable to load agents.");
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
+    }, [hostname, status]);
 
     function handleClearFilters() {
         setHostname("");
         setStatus("");
         loadAgents();
     }
-
-    useEffect(() => {
-        loadAgents();
-    }, []);
 
     return (
         <div>
@@ -71,22 +76,19 @@ function Agents() {
                 </p>
             </div>
 
-            <form
-                onSubmit={handleSearch}
-                className="mt-8 grid gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg md:grid-cols-[1fr_220px_auto_auto]"
-            >
+            <div className="mt-8 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg">
                 <input
                     type="text"
                     value={hostname}
                     onChange={(event) => setHostname(event.target.value)}
                     placeholder="Search hostname..."
-                    className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-cyan-500"
+                    className="min-w-[260px] flex-1 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-cyan-500"
                 />
 
                 <select
                     value={status}
                     onChange={(event) => setStatus(event.target.value)}
-                    className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none focus:border-cyan-500"
+                    className="w-34 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none focus:border-cyan-500"
                 >
                     <option value="">All statuses</option>
                     <option value="ONLINE">ONLINE</option>
@@ -94,20 +96,13 @@ function Agents() {
                 </select>
 
                 <button
-                    type="submit"
-                    className="rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-400"
-                >
-                    Search
-                </button>
-
-                <button
                     type="button"
                     onClick={handleClearFilters}
-                    className="rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-300 hover:bg-slate-800"
+                    className="w-24 rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-300 hover:bg-slate-800"
                 >
                     Clear
                 </button>
-            </form>
+            </div>
 
             {loading && <p className="mt-8 text-slate-400">Loading agents...</p>}
 

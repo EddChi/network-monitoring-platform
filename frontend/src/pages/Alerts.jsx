@@ -4,8 +4,13 @@ import { getAlerts } from "../api/alertsApi";
 
 function Alerts() {
     const [alerts, setAlerts] = useState([]);
+    const [severity, setSeverity] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    const filteredAlerts = severity
+        ? alerts.filter((alert) => alert.severity === severity)
+        : alerts;
 
     useEffect(() => {
         getAlerts()
@@ -37,6 +42,38 @@ function Alerts() {
                 </p>
             </div>
 
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
+                <div>
+                    <h2 className="text-lg font-semibold text-slate-100">
+                        Alert Filters
+                    </h2>
+                    <p className="mt-1 text-sm text-slate-400">
+                        Filter alerts by severity level.
+                    </p>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                    <select
+                        value={severity}
+                        onChange={(event) => setSeverity(event.target.value)}
+                        className="w-34 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none focus:border-cyan-500"
+                    >
+                        <option value="">All Severities</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="HIGH">High</option>
+                        <option value="CRITICAL">Critical</option>
+                    </select>
+
+                    <button
+                        type="button"
+                        onClick={() => setSeverity("")}
+                        className="w-24 rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-300 hover:bg-slate-800"
+                    >
+                        Clear
+                    </button>
+                </div>
+            </div>
+
             {loading && <p className="mt-8 text-slate-400">Loading alerts...</p>}
 
             {error && (
@@ -47,7 +84,7 @@ function Alerts() {
 
             {!loading && !error && (
                 <div className="mt-8">
-                    <AlertTable alerts={alerts} />
+                    <AlertTable alerts={filteredAlerts} />
                 </div>
             )}
         </div>
