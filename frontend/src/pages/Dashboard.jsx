@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import StatCard from "../components/dashboard/StatCard";
+import RecentActivity from "../components/dashboard/RecentActivity";
 import { getDashboardSummary } from "../api/dashboardApi";
+import { getRecentActivity } from "../api/activityApi";
 
 function Dashboard() {
     const [summary, setSummary] = useState(null);
+    const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        getDashboardSummary()
-            .then((response) => {
-                setSummary(response.data);
+        Promise.all([getDashboardSummary(), getRecentActivity()])
+            .then(([summaryResponse, activityResponse]) => {
+                setSummary(summaryResponse.data);
+                setActivities(activityResponse.data);
                 setError("");
             })
             .catch(() => {
-                setError("Unable to load dashboard summary.");
+                setError("Unable to load dashboard data.");
             })
             .finally(() => {
                 setLoading(false);
@@ -38,7 +42,7 @@ function Dashboard() {
             </div>
 
             {loading && (
-                <p className="mt-8 text-slate-400">Loading dashboard summary...</p>
+                <p className="mt-8 text-slate-400">Loading dashboard data...</p>
             )}
 
             {error && (
@@ -78,6 +82,12 @@ function Dashboard() {
                         value={summary.criticalAlerts}
                         subtitle="Highest priority"
                     />
+                </div>
+            )}
+
+            {!loading && !error && (
+                <div className="mt-8">
+                    <RecentActivity activities={activities} />
                 </div>
             )}
         </div>
