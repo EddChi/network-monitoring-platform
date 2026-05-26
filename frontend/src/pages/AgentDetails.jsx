@@ -2,22 +2,35 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import StatusBadge from "../components/agents/StatusBadge";
 import MetricsSummary from "../components/agents/MetricsSummary";
+import AgentEventTimeline from "../components/agents/AgentEventTimeline";
+import AlertTable from "../components/alerts/AlertTable";
 import { getAgentById } from "../api/agentsApi";
 import { getAgentMetricsSummary } from "../api/metricsApi";
+import { getAlertsByAgentId } from "../api/alertsApi";
+import { getEventsByAgentId } from "../api/eventsApi";
 
 function AgentDetails() {
     const { id } = useParams();
 
     const [agent, setAgent] = useState(null);
     const [metrics, setMetrics] = useState(null);
+    const [alerts, setAlerts] = useState([]);
+    const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        Promise.all([getAgentById(id), getAgentMetricsSummary(id)])
-            .then(([agentResponse, metricsResponse]) => {
+        Promise.all([
+            getAgentById(id),
+            getAgentMetricsSummary(id),
+            getAlertsByAgentId(id),
+            getEventsByAgentId(id),
+        ])
+            .then(([agentResponse, metricsResponse, alertsResponse, eventsResponse]) => {
                 setAgent(agentResponse.data);
                 setMetrics(metricsResponse.data);
+                setAlerts(alertsResponse.data);
+                setEvents(eventsResponse.data);
                 setError("");
             })
             .catch(() => {
@@ -89,6 +102,27 @@ function AgentDetails() {
             )}
 
             {metrics && <MetricsSummary metrics={metrics} />}
+
+            {!loading && !error && (
+                <div className="mt-8">
+                    <div className="mb-4">
+                        <h2 className="text-lg font-semibold text-slate-100">
+                            Agent Alerts
+                        </h2>
+                        <p className="mt-1 text-sm text-slate-400">
+                            Alerts generated specifically for this monitored agent.
+                        </p>
+                    </div>
+
+                    <AlertTable alerts={alerts} />
+                </div>
+            )}
+
+            {!loading && !error && (
+                <div className="mt-8">
+                    <AgentEventTimeline events={events} />
+                </div>
+            )}
         </div>
     );
 }
