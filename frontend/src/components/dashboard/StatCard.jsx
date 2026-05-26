@@ -1,6 +1,6 @@
 function StatCard({ title, value, subtitle }) {
     return (
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg transition hover:-translate-y-1 hover:border-cyan-900 hover:bg-slate-800/80">
             <p className="text-sm font-medium text-slate-400">{title}</p>
 
             <p className="mt-3 text-3xl font-bold text-slate-100">{value}</p>
