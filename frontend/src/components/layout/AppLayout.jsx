@@ -28,6 +28,13 @@ function AppLayout() {
                     >
                         Alerts
                     </NavLink>
+
+                    <NavLink
+                        to="/activity"
+                        className="block rounded-xl px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white"
+                    >
+                        Activity
+                    </NavLink>
                 </nav>
             </aside>
 
