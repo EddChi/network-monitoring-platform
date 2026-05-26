@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import StatCard from "../components/dashboard/StatCard";
 import RecentActivity from "../components/dashboard/RecentActivity";
+import LatestAlerts from "../components/dashboard/LatestAlerts";
 import { getDashboardSummary } from "../api/dashboardApi";
 import { getRecentActivity } from "../api/activityApi";
+import { getAlerts } from "../api/alertsApi";
 
 function Dashboard() {
     const [summary, setSummary] = useState(null);
     const [activities, setActivities] = useState([]);
+    const [alerts, setAlerts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        Promise.all([getDashboardSummary(), getRecentActivity()])
-            .then(([summaryResponse, activityResponse]) => {
+        Promise.all([getDashboardSummary(), getRecentActivity(), getAlerts()])
+            .then(([summaryResponse, activityResponse, alertsResponse]) => {
                 setSummary(summaryResponse.data);
                 setActivities(activityResponse.data);
+                setAlerts(alertsResponse.data);
                 setError("");
             })
             .catch(() => {
@@ -86,7 +90,8 @@ function Dashboard() {
             )}
 
             {!loading && !error && (
-                <div className="mt-8">
+                <div className="mt-8 grid gap-6 xl:grid-cols-2">
+                    <LatestAlerts alerts={alerts} />
                     <RecentActivity activities={activities} />
                 </div>
             )}
