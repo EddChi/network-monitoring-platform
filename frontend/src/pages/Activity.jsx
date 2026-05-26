@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RecentActivity from "../components/dashboard/RecentActivity";
+import ActivityTimeline from "../components/activity/ActivityTimeline";
 import { getRecentActivity } from "../api/activityApi";
 
 function Activity() {
@@ -47,7 +47,7 @@ function Activity() {
 
             {!loading && !error && (
                 <div className="mt-8">
-                    <RecentActivity activities={activities} />
+                    <ActivityTimeline activities={activities} />
                 </div>
             )}
         </div>
