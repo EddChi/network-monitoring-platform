@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import StatusBadge from "./StatusBadge";
 
 function AgentTable({ agents }) {
@@ -30,8 +31,13 @@ function AgentTable({ agents }) {
                 <tbody className="divide-y divide-slate-800">
                 {agents.map((agent) => (
                     <tr key={agent.id} className="hover:bg-slate-800/50">
-                        <td className="px-6 py-4 font-medium text-slate-100">
-                            {agent.hostname}
+                        <td className="px-6 py-4 font-medium">
+                            <Link
+                                to={`/agents/${agent.id}`}
+                                className="text-cyan-300 hover:text-cyan-200 hover:underline"
+                            >
+                                {agent.hostname}
+                            </Link>
                         </td>
 
                         <td className="px-6 py-4 text-slate-300">{agent.ipAddress}</td>
