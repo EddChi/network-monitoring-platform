@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import StatusBadge from "../components/agents/StatusBadge";
 import MetricsSummary from "../components/agents/MetricsSummary";
+import MetricsHistoryTable from "../components/agents/MetricsHistoryTable";
 import AgentEventTimeline from "../components/agents/AgentEventTimeline";
 import AlertTable from "../components/alerts/AlertTable";
 import { getAgentById } from "../api/agentsApi";
-import { getAgentMetricsSummary } from "../api/metricsApi";
+import { getAgentMetrics, getAgentMetricsSummary } from "../api/metricsApi";
 import { getAlertsByAgentId } from "../api/alertsApi";
 import { getEventsByAgentId } from "../api/eventsApi";
 
@@ -14,6 +15,7 @@ function AgentDetails() {
 
     const [agent, setAgent] = useState(null);
     const [metrics, setMetrics] = useState(null);
+    const [metricsHistory, setMetricsHistory] = useState([]);
     const [alerts, setAlerts] = useState([]);
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,16 +25,26 @@ function AgentDetails() {
         Promise.all([
             getAgentById(id),
             getAgentMetricsSummary(id),
+            getAgentMetrics(id),
             getAlertsByAgentId(id),
             getEventsByAgentId(id),
         ])
-            .then(([agentResponse, metricsResponse, alertsResponse, eventsResponse]) => {
-                setAgent(agentResponse.data);
-                setMetrics(metricsResponse.data);
-                setAlerts(alertsResponse.data);
-                setEvents(eventsResponse.data);
-                setError("");
-            })
+            .then(
+                ([
+                     agentResponse,
+                     metricsResponse,
+                     metricsHistoryResponse,
+                     alertsResponse,
+                     eventsResponse,
+                 ]) => {
+                    setAgent(agentResponse.data);
+                    setMetrics(metricsResponse.data);
+                    setMetricsHistory(metricsHistoryResponse.data);
+                    setAlerts(alertsResponse.data);
+                    setEvents(eventsResponse.data);
+                    setError("");
+                },
+            )
             .catch(() => {
                 setError("Unable to load agent details.");
             })
@@ -112,6 +124,12 @@ function AgentDetails() {
             )}
 
             {metrics && <MetricsSummary metrics={metrics} />}
+
+            {!loading && !error && (
+                <div className="mt-8">
+                    <MetricsHistoryTable metrics={metricsHistory} />
+                </div>
+            )}
 
             {!loading && !error && (
                 <div className="mt-8">
