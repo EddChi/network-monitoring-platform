@@ -26,7 +26,9 @@ function Alerts() {
         (alert) => alert.severity === "CRITICAL",
     ).length;
 
-    useEffect(() => {
+    function loadAlerts() {
+        setLoading(true);
+
         getAlerts()
             .then((response) => {
                 setAlerts(response.data);
@@ -38,6 +40,15 @@ function Alerts() {
             .finally(() => {
                 setLoading(false);
             });
+    }
+
+    function handleRefreshAlerts() {
+        setSeverity("");
+        loadAlerts();
+    }
+
+    useEffect(() => {
+        loadAlerts();
     }, []);
 
     return (
@@ -54,6 +65,16 @@ function Alerts() {
                 <p className="mt-2 text-slate-400">
                     View generated alerts, severity levels and affected network agents.
                 </p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                    <button
+                        type="button"
+                        onClick={handleRefreshAlerts}
+                        className="cursor-pointer rounded-xl border border-emerald-900 bg-emerald-950 px-4 py-2 text-sm font-semibold text-emerald-300 hover:bg-emerald-900/60"
+                    >
+                        Refresh Alerts
+                    </button>
+                </div>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
@@ -70,9 +91,9 @@ function Alerts() {
                     <select
                         value={severity}
                         onChange={(event) => setSeverity(event.target.value)}
-                        className="w-34 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none focus:border-cyan-500"
+                        className="w-44 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none focus:border-cyan-500"
                     >
-                        <option value="">All Severities</option>
+                        <option value="">All severities</option>
                         <option value="MEDIUM">Medium</option>
                         <option value="HIGH">High</option>
                         <option value="CRITICAL">Critical</option>

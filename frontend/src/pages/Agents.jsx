@@ -80,6 +80,16 @@ function Agents() {
                 <p className="mt-2 text-slate-400">
                     View registered monitoring agents, their status and last seen times.
                 </p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                    <button
+                        type="button"
+                        onClick={handleClearFilters}
+                        className="cursor-pointer rounded-xl border border-emerald-900 bg-emerald-950 px-4 py-2 text-sm font-semibold text-emerald-300 hover:bg-emerald-900/60"
+                    >
+                        Refresh Agents
+                    </button>
+                </div>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg">
