@@ -15,6 +15,7 @@ function Dashboard() {
     const [alerts, setAlerts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [lastUpdated, setLastUpdated] = useState(null);
     const [error, setError] = useState("");
 
     function loadDashboardData(isRefresh = false) {
@@ -29,6 +30,7 @@ function Dashboard() {
                 setSummary(summaryResponse.data);
                 setActivities(activityResponse.data);
                 setAlerts(alertsResponse.data);
+                setLastUpdated(new Date());
                 setError("");
             })
             .catch(() => {
@@ -90,6 +92,13 @@ function Dashboard() {
                         {refreshing ? "Refreshing..." : "Refresh Data"}
                     </button>
                 </div>
+
+                {lastUpdated && (
+                    <p className="mt-3 text-sm text-slate-500">
+                        Last updated: {lastUpdated.toLocaleTimeString()}
+                    </p>
+                )}
+
             </div>
 
             {loading && <LoadingState message="Loading dashboard data..." />}
