@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AgentTable from "../components/agents/AgentTable";
 import { getAgents, searchAgents } from "../api/agentsApi";
 import ErrorState from "../components/common/ErrorState";
+import StatCard from "../components/dashboard/StatCard";
 
 function Agents() {
     const [agents, setAgents] = useState([]);
@@ -10,6 +11,9 @@ function Agents() {
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const totalAgents = agents.length;
+    const onlineAgents = agents.filter((agent) => agent.status === "ONLINE").length;
+    const offlineAgents = agents.filter((agent) => agent.status === "OFFLINE").length;
 
     function loadAgents() {
         setLoading(true);
@@ -106,12 +110,45 @@ function Agents() {
                 </button>
             </div>
 
+            {!loading && !error && (
+                <div className="mt-8 grid gap-6 md:grid-cols-3">
+                    <StatCard
+                        title="Displayed Agents"
+                        value={totalAgents}
+                        subtitle="Matching current filters"
+                    />
+
+                    <StatCard
+                        title="Online"
+                        value={onlineAgents}
+                        subtitle="Currently healthy"
+                    />
+
+                    <StatCard
+                        title="Offline"
+                        value={offlineAgents}
+                        subtitle="Need attention"
+                    />
+                </div>
+            )}
+
             {loading && <LoadingState message="Loading agents..." />}
 
             {error && <ErrorState message={error} />}
 
             {!loading && !error && (
                 <div className="mt-8">
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h2 className="text-lg font-semibold text-slate-100">
+                                Agent Results
+                            </h2>
+                            <p className="mt-1 text-sm text-slate-400">
+                                Showing {agents.length} matching agent{agents.length === 1 ? "" : "s"}.
+                            </p>
+                        </div>
+                    </div>
+
                     <AgentTable agents={agents} />
                 </div>
             )}
