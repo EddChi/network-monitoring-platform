@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AlertTable from "../components/alerts/AlertTable";
 import { getAlerts } from "../api/alertsApi";
 import ErrorState from "../components/common/ErrorState";
+import StatCard from "../components/dashboard/StatCard";
 
 function Alerts() {
     const [alerts, setAlerts] = useState([]);
@@ -13,6 +14,17 @@ function Alerts() {
     const filteredAlerts = severity
         ? alerts.filter((alert) => alert.severity === severity)
         : alerts;
+
+    const totalAlerts = filteredAlerts.length;
+    const mediumAlerts = filteredAlerts.filter(
+        (alert) => alert.severity === "MEDIUM",
+    ).length;
+    const highAlerts = filteredAlerts.filter(
+        (alert) => alert.severity === "HIGH",
+    ).length;
+    const criticalAlerts = filteredAlerts.filter(
+        (alert) => alert.severity === "CRITICAL",
+    ).length;
 
     useEffect(() => {
         getAlerts()
@@ -76,12 +88,52 @@ function Alerts() {
                 </div>
             </div>
 
+            {!loading && !error && (
+                <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                    <StatCard
+                        title="Displayed Alerts"
+                        value={totalAlerts}
+                        subtitle="Matching current filter"
+                    />
+
+                    <StatCard
+                        title="Medium"
+                        value={mediumAlerts}
+                        subtitle="Moderate priority"
+                    />
+
+                    <StatCard
+                        title="High"
+                        value={highAlerts}
+                        subtitle="Needs review"
+                    />
+
+                    <StatCard
+                        title="Critical"
+                        value={criticalAlerts}
+                        subtitle="Highest priority"
+                    />
+                </div>
+            )}
+
             {loading && <LoadingState message="Loading alerts..." />}
 
             {error && <ErrorState message={error} />}
 
             {!loading && !error && (
                 <div className="mt-8">
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h2 className="text-lg font-semibold text-slate-100">
+                                Alert Results
+                            </h2>
+                            <p className="mt-1 text-sm text-slate-400">
+                                Showing {filteredAlerts.length} matching alert
+                                {filteredAlerts.length === 1 ? "" : "s"}.
+                            </p>
+                        </div>
+                    </div>
+
                     <AlertTable alerts={filteredAlerts} />
                 </div>
             )}
