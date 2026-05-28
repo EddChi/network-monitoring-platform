@@ -131,11 +131,81 @@ GET /api/activity/recent
 
 ---
 
+## Frontend Dashboard
+
+A React frontend dashboard has been added to provide a portfolio-ready interface for viewing monitoring data from the Spring Boot API.
+
+### Frontend Tech Stack
+
+- React
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
+
+### Frontend Features
+
+- Dashboard overview with agent and alert summary cards
+- Latest alerts and recent activity preview panels
+- Agents page with hostname search and status filtering
+- Agent details page with profile data, metrics summary, metrics history, alerts and event timeline
+- Alerts page with severity filtering and summary cards
+- Activity timeline page for recent monitoring events
+- Reusable loading and error states
+- Polished 404 page for invalid routes
+- Environment-based API configuration for deployment readiness
+
+### Frontend Setup
+
+Navigate to the frontend folder:
+
+```bash
+cd frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file inside the `frontend` folder:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080/api
+```
+
+An example file is provided at:
+
+```text
+frontend/.env.example
+```
+
+Run the frontend locally:
+
+```bash
+npm run dev
+```
+
+The frontend will start at:
+
+```text
+http://localhost:5173
+```
+
+Build the frontend for production:
+
+```bash
+npm run build
+```
+
+---
+
 ## Future Improvements
 
-- React frontend dashboard
 - Authentication with Spring Security + JWT
 - WebSocket live updates
 - Charts for metrics visualisation
 - Deployment to cloud infrastructure
 - Real agent monitoring clients
+- Public live demo for recruiters
