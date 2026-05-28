@@ -12,9 +12,16 @@ function Dashboard() {
     const [activities, setActivities] = useState([]);
     const [alerts, setAlerts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState("");
 
-    useEffect(() => {
+    function loadDashboardData(isRefresh = false) {
+        if (isRefresh) {
+            setRefreshing(true);
+        } else {
+            setLoading(true);
+        }
+
         Promise.all([getDashboardSummary(), getRecentActivity(), getAlerts()])
             .then(([summaryResponse, activityResponse, alertsResponse]) => {
                 setSummary(summaryResponse.data);
@@ -27,7 +34,12 @@ function Dashboard() {
             })
             .finally(() => {
                 setLoading(false);
+                setRefreshing(false);
             });
+    }
+
+    useEffect(() => {
+        loadDashboardData();
     }, []);
 
     return (
@@ -66,8 +78,16 @@ function Dashboard() {
                     >
                         View Activity
                     </Link>
-                </div>
 
+                    <button
+                        type="button"
+                        onClick={() => loadDashboardData(true)}
+                        disabled={refreshing}
+                        className="rounded-xl border border-emerald-900 bg-emerald-950 px-4 py-2 text-sm font-semibold text-emerald-300 hover:bg-emerald-900/60 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                        {refreshing ? "Refreshing..." : "Refresh Data"}
+                    </button>
+                </div>
             </div>
 
             {loading && (
