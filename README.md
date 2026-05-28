@@ -201,6 +201,27 @@ npm run build
 
 ---
 
+### Screenshots
+
+#### Dashboard Overview
+
+![Dashboard Overview](docs/screenshots/dashboard-overview.png)
+
+#### Agents Page
+
+![Agents Page](docs/screenshots/agents-page.png)
+
+#### Agent Details Drill-Down
+
+![Agent Details](docs/screenshots/agent-details.png)
+
+#### Alerts Page
+
+![Alerts Page](docs/screenshots/alerts-page.png)
+
+#### Activity Timeline
+
+![Activity Timeline](docs/screenshots/activity-page.png)
 ## Future Improvements
 
 - Authentication with Spring Security + JWT
