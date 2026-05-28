@@ -2,6 +2,7 @@ import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import AlertTable from "../components/alerts/AlertTable";
 import { getAlerts } from "../api/alertsApi";
+import ErrorState from "../components/common/ErrorState";
 
 function Alerts() {
     const [alerts, setAlerts] = useState([]);
@@ -77,11 +78,7 @@ function Alerts() {
 
             {loading && <LoadingState message="Loading alerts..." />}
 
-            {error && (
-                <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">
-                    {error}
-                </div>
-            )}
+            {error && <ErrorState message={error} />}
 
             {!loading && !error && (
                 <div className="mt-8">

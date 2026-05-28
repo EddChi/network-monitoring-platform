@@ -2,6 +2,7 @@ import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import AgentTable from "../components/agents/AgentTable";
 import { getAgents, searchAgents } from "../api/agentsApi";
+import ErrorState from "../components/common/ErrorState";
 
 function Agents() {
     const [agents, setAgents] = useState([]);
@@ -107,11 +108,7 @@ function Agents() {
 
             {loading && <LoadingState message="Loading agents..." />}
 
-            {error && (
-                <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">
-                    {error}
-                </div>
-            )}
+            {error && <ErrorState message={error} />}
 
             {!loading && !error && (
                 <div className="mt-8">

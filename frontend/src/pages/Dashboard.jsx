@@ -7,6 +7,7 @@ import LatestAlerts from "../components/dashboard/LatestAlerts";
 import { getDashboardSummary } from "../api/dashboardApi";
 import { getRecentActivity } from "../api/activityApi";
 import { getAlerts } from "../api/alertsApi";
+import ErrorState from "../components/common/ErrorState";
 
 function Dashboard() {
     const [summary, setSummary] = useState(null);
@@ -93,11 +94,7 @@ function Dashboard() {
 
             {loading && <LoadingState message="Loading dashboard data..." />}
 
-            {error && (
-                <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">
-                    {error}
-                </div>
-            )}
+            {error && <ErrorState message={error} />}
 
             {summary && (
                 <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-5">

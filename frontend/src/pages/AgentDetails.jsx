@@ -10,6 +10,7 @@ import { getAgentById } from "../api/agentsApi";
 import { getAgentMetrics, getAgentMetricsSummary } from "../api/metricsApi";
 import { getAlertsByAgentId } from "../api/alertsApi";
 import { getEventsByAgentId } from "../api/eventsApi";
+import ErrorState from "../components/common/ErrorState";
 
 function AgentDetails() {
     const { id } = useParams();
@@ -82,11 +83,7 @@ function AgentDetails() {
 
             {loading && <LoadingState message="Loading agent details..." />}
 
-            {error && (
-                <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">
-                    {error}
-                </div>
-            )}
+            {error && <ErrorState message={error} />}
 
             {agent && (
                 <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">

@@ -2,6 +2,7 @@ import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import ActivityTimeline from "../components/activity/ActivityTimeline";
 import { getRecentActivity } from "../api/activityApi";
+import ErrorState from "../components/common/ErrorState";
 
 function Activity() {
     const [activities, setActivities] = useState([]);
@@ -40,11 +41,7 @@ function Activity() {
 
             {loading && <LoadingState message="Loading activity..." />}
 
-            {error && (
-                <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">
-                    {error}
-                </div>
-            )}
+            {error && <ErrorState message={error} />}
 
             {!loading && !error && (
                 <div className="mt-8">
