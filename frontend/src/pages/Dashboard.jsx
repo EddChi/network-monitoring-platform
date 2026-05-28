@@ -1,3 +1,4 @@
+import LoadingState from "../components/common/LoadingState";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StatCard from "../components/dashboard/StatCard";
@@ -83,16 +84,14 @@ function Dashboard() {
                         type="button"
                         onClick={() => loadDashboardData(true)}
                         disabled={refreshing}
-                        className="rounded-xl border border-emerald-900 bg-emerald-950 px-4 py-2 text-sm font-semibold text-emerald-300 hover:bg-emerald-900/60 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="cursor-pointer rounded-xl border border-emerald-900 bg-emerald-950 px-4 py-2 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-900/60 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                         {refreshing ? "Refreshing..." : "Refresh Data"}
                     </button>
                 </div>
             </div>
 
-            {loading && (
-                <p className="mt-8 text-slate-400">Loading dashboard data...</p>
-            )}
+            {loading && <LoadingState message="Loading dashboard data..." />}
 
             {error && (
                 <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">

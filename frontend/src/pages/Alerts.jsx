@@ -1,3 +1,4 @@
+import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import AlertTable from "../components/alerts/AlertTable";
 import { getAlerts } from "../api/alertsApi";
@@ -74,7 +75,7 @@ function Alerts() {
                 </div>
             </div>
 
-            {loading && <p className="mt-8 text-slate-400">Loading alerts...</p>}
+            {loading && <LoadingState message="Loading alerts..." />}
 
             {error && (
                 <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">

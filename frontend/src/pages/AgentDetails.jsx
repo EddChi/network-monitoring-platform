@@ -1,3 +1,4 @@
+import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import StatusBadge from "../components/agents/StatusBadge";
@@ -79,9 +80,7 @@ function AgentDetails() {
                 </p>
             </div>
 
-            {loading && (
-                <p className="mt-8 text-slate-400">Loading agent details...</p>
-            )}
+            {loading && <LoadingState message="Loading agent details..." />}
 
             {error && (
                 <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">

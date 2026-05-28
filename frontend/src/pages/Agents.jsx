@@ -1,3 +1,4 @@
+import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import AgentTable from "../components/agents/AgentTable";
 import { getAgents, searchAgents } from "../api/agentsApi";
@@ -104,7 +105,7 @@ function Agents() {
                 </button>
             </div>
 
-            {loading && <p className="mt-8 text-slate-400">Loading agents...</p>}
+            {loading && <LoadingState message="Loading agents..." />}
 
             {error && (
                 <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">

@@ -1,3 +1,4 @@
+import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import ActivityTimeline from "../components/activity/ActivityTimeline";
 import { getRecentActivity } from "../api/activityApi";
@@ -37,7 +38,7 @@ function Activity() {
                 </p>
             </div>
 
-            {loading && <p className="mt-8 text-slate-400">Loading activity...</p>}
+            {loading && <LoadingState message="Loading activity..." />}
 
             {error && (
                 <div className="mt-8 rounded-xl border border-red-900 bg-red-950/50 p-4 text-red-300">
