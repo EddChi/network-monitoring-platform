@@ -91,8 +91,8 @@ function Agents() {
                     className="w-34 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none focus:border-cyan-500"
                 >
                     <option value="">All statuses</option>
-                    <option value="ONLINE">ONLINE</option>
-                    <option value="OFFLINE">OFFLINE</option>
+                    <option value="ONLINE">Online</option>
+                    <option value="OFFLINE">Offline</option>
                 </select>
 
                 <button

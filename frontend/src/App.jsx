@@ -1,3 +1,4 @@
+import NotFound from "./pages/NotFound";
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "./components/layout/AppLayout";
 import Dashboard from "./pages/Dashboard";
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/agents/:id" element={<AgentDetails />} />
                 <Route path="/alerts" element={<Alerts />} />
                 <Route path="/activity" element={<Activity />} />
+                <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
     );
