@@ -1,5 +1,6 @@
 import {
     CartesianGrid,
+    Legend,
     Line,
     LineChart,
     ResponsiveContainer,
@@ -33,6 +34,25 @@ function MetricsChart({ metrics }) {
                 <p className="mt-1 text-sm text-slate-400">
                     Visual trend of CPU, memory, disk usage and network latency over time.
                 </p>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-cyan-900 bg-cyan-950 px-3 py-1 text-xs font-medium text-cyan-300">
+                        CPU
+                    </span>
+
+                    <span className="rounded-full border border-violet-900 bg-violet-950 px-3 py-1 text-xs font-medium text-violet-300">
+                        Memory
+                    </span>
+
+                    <span className="rounded-full border border-emerald-900 bg-emerald-950 px-3 py-1 text-xs font-medium text-emerald-300">
+                        Disk
+                    </span>
+
+                    <span className="rounded-full border border-orange-900 bg-orange-950 px-3 py-1 text-xs font-medium text-orange-300">
+                        Latency
+                    </span>
+                </div>
+
             </div>
 
             <div className="mt-6 h-80 rounded-xl border border-slate-800 bg-slate-950 p-4">
@@ -59,6 +79,13 @@ function MetricsChart({ metrics }) {
                                 color: "#e2e8f0",
                             }}
                             labelStyle={{ color: "#67e8f9" }}
+                        />
+
+                        <Legend
+                            wrapperStyle={{
+                                color: "#cbd5e1",
+                                fontSize: "12px",
+                            }}
                         />
 
                         <Line
