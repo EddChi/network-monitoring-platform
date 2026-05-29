@@ -82,6 +82,70 @@ PostgreSQL Database
 
 ---
 
+## Running the Full-Stack Application Locally
+
+To run the complete monitoring platform locally, start the database and backend first, then start the frontend dashboard.
+
+### 1. Start PostgreSQL
+
+From the backend project folder, start the PostgreSQL container using Docker Compose.
+
+```bash
+docker compose up -d
+```
+
+### 2. Start the Spring Boot Backend
+
+Run the backend application from:
+
+```text
+backend/network-monitor-backend
+```
+
+The API will be available at:
+
+```text
+http://localhost:8080
+```
+
+### 3. Start the React Frontend
+
+Open a second terminal and navigate to:
+
+```bash
+cd frontend
+```
+
+Install dependencies if needed:
+
+```bash
+npm install
+```
+
+Run the frontend:
+
+```bash
+npm run dev
+```
+
+The dashboard will be available at:
+
+```text
+http://localhost:5173
+```
+
+### Local Application Flow
+
+```text
+React Frontend
+     ↓
+Spring Boot REST API
+     ↓
+PostgreSQL Database
+```
+
+---
+
 ## API Endpoints
 
 ### Agents
