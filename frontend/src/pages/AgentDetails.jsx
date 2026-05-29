@@ -1,3 +1,4 @@
+import MetricsChart from "../components/agents/MetricsChart";
 import LoadingState from "../components/common/LoadingState";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -120,6 +121,8 @@ function AgentDetails() {
             )}
 
             {metrics && <MetricsSummary metrics={metrics} />}
+
+            {!loading && !error && <MetricsChart metrics={metricsHistory} />}
 
             {!loading && !error && (
                 <div className="mt-8">

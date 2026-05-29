@@ -222,6 +222,9 @@ npm run build
 #### Activity Timeline
 
 ![Activity Timeline](docs/screenshots/activity-page.png)
+
+---
+
 ## Future Improvements
 
 - Authentication with Spring Security + JWT
