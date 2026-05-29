@@ -82,6 +82,56 @@ PostgreSQL Database
 
 ---
 
+## Project Structure
+
+```text
+network-monitoring-platform/
+├── backend/
+│   └── network-monitor-backend/
+│       ├── src/
+│       │   ├── main/
+│       │   │   ├── java/com/eddchi/networkmonitor/
+│       │   │   │   ├── config/
+│       │   │   │   ├── controller/
+│       │   │   │   ├── dto/
+│       │   │   │   ├── exception/
+│       │   │   │   ├── model/
+│       │   │   │   ├── repository/
+│       │   │   │   ├── service/
+│       │   │   │   └── NetworkMonitorBackendApplication.java
+│       │   │   └── resources/
+│       │   └── test/
+│       ├── build.gradle
+│       ├── docker-compose.yml
+│       ├── gradlew
+│       ├── gradlew.bat
+│       └── settings.gradle
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── activity/
+│   │   │   ├── agents/
+│   │   │   ├── alerts/
+│   │   │   ├── common/
+│   │   │   ├── dashboard/
+│   │   │   └── layout/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── .env.example
+│   ├── package.json
+│   └── vite.config.js
+├── docs/
+│   └── screenshots/
+└── README.md
+```
+
+---
+
 ## Running the Full-Stack Application Locally
 
 To run the complete monitoring platform locally, start the database and backend first, then start the frontend dashboard.
