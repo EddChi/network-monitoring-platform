@@ -142,13 +142,15 @@ A React frontend dashboard has been added to provide a portfolio-ready interface
 - Tailwind CSS
 - Axios
 - React Router
+- Recharts
 
 ### Frontend Features
 
 - Dashboard overview with agent and alert summary cards
 - Latest alerts and recent activity preview panels
 - Agents page with hostname search and status filtering
-- Agent details page with profile data, metrics summary, metrics history, alerts and event timeline
+- Agent details page with profile data, metrics summary, metrics history, alerts and event timeline 
+- Metrics trend chart for CPU, memory, disk and latency visualisation
 - Alerts page with severity filtering and summary cards
 - Activity timeline page for recent monitoring events
 - Reusable loading and error states
