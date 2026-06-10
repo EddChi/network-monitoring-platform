@@ -1,4 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { checkApiHealth } from "../../api/healthApi";
 
 function AppLayout() {
     const navLinkClass = ({ isActive }) =>
@@ -7,6 +9,21 @@ function AppLayout() {
                 ? "bg-cyan-500/10 text-cyan-300"
                 : "text-slate-300 hover:bg-slate-800 hover:text-white"
         }`;
+
+    const [apiOnline, setApiOnline] = useState(null);
+
+    useEffect(() => {
+        async function checkHealth() {
+            try {
+                await checkApiHealth();
+                setApiOnline(true);
+            } catch (error) {
+                setApiOnline(false);
+            }
+        }
+
+        checkHealth();
+    }, []);
 
     return (
         <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -63,8 +80,20 @@ function AppLayout() {
                             </h2>
                         </div>
 
-                        <div className="rounded-full border border-emerald-900 bg-emerald-950 px-4 py-2 text-sm font-medium text-emerald-300">
-                            Development API
+                        <div
+                            className={`rounded-full border px-4 py-1.5 text-sm font-semibold ${
+                                apiOnline === true
+                                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                                    : apiOnline === false
+                                        ? "border-red-500/30 bg-red-500/10 text-red-300"
+                                        : "border-slate-600 bg-slate-800 text-slate-300"
+                            }`}
+                        >
+                            {apiOnline === true
+                                ? "API Online"
+                                : apiOnline === false
+                                    ? "API Offline"
+                                    : "Checking API"}
                         </div>
                     </header>
                     <section className="pb-10">
